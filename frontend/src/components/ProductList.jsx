@@ -1,58 +1,58 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchProducts, deleteProduct } from '../slices/productSlice';
-import { logout } from '../slices/userSlice';
-import { Table, TableBody, TableCell, TableHead, TableRow, Button, Dialog, DialogActions, DialogContent, DialogTitle, AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText, Box } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import ProductForm from './ProductForm';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { fetchProducts, deleteProduct } from "../slices/productSlice"
+import { logout } from "../slices/userSlice"
+import { Table, TableBody, TableCell, TableHead, TableRow, Button, Dialog, DialogActions, DialogContent, DialogTitle, AppBar, Toolbar, Typography, IconButton, Drawer, List, ListItem, ListItemText, Box } from "@mui/material"
+import AddIcon from "@mui/icons-material/Add"
+import EditIcon from "@mui/icons-material/Edit"
+import DeleteIcon from "@mui/icons-material/Delete"
+import ExitToAppIcon from "@mui/icons-material/ExitToApp"
+import ProductForm from "./ProductForm"
+import { useNavigate } from "react-router-dom"
 
 const ProductList = () => {
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const products = useSelector((state) => state.products.items);
-    const productStatus = useSelector((state) => state.products.status);
-    const error = useSelector((state) => state.products.error);
-    const [open, setOpen] = React.useState(false);
-    const [selectedProduct, setSelectedProduct] = React.useState(null);
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const products = useSelector((state) => state.products.items)
+    const productStatus = useSelector((state) => state.products.status)
+    const error = useSelector((state) => state.products.error)
+    const [open, setOpen] = React.useState(false)
+    const [selectedProduct, setSelectedProduct] = React.useState(null)
 
     useEffect(() => {
-        if (productStatus === 'idle') {
-            dispatch(fetchProducts());
+        if (productStatus === "idle") {
+            dispatch(fetchProducts())
         }
-    }, [productStatus, dispatch]);
+    }, [productStatus, dispatch])
 
     const handleDelete = (id) => {
-        dispatch(deleteProduct(id));
-    };
+        dispatch(deleteProduct(id))
+    }
 
     const handleOpen = (product) => {
-        setSelectedProduct(product);
-        setOpen(true);
-    };
+        setSelectedProduct(product)
+        setOpen(true)
+    }
 
     const handleClose = () => {
-        setOpen(false);
-        setSelectedProduct(null);
-    };
+        setOpen(false)
+        setSelectedProduct(null)
+    }
 
     const handleLogout = () => {
-        dispatch(logout());
-        navigate('/login');
-    };
+        dispatch(logout())
+        navigate("/login")
+    }
 
     const toggleAvailable = (product) => {
-        dispatch(updateProduct({ ...product, available: !product.available }));
-    };
+        dispatch(updateProduct({ ...product, available: !product.available }))
+    }
 
-    let content;
+    let content
 
-    if (productStatus === 'loading') {
-        content = <div>Loading...</div>;
-    } else if (productStatus === 'succeeded') {
+    if (productStatus === "loading") {
+        content = <div>Loading...</div>
+    } else if (productStatus === "succeeded") {
         content = (
             <Table>
                 <TableHead>
@@ -78,11 +78,11 @@ const ProductList = () => {
                                 <Button
                                     onClick={() => toggleAvailable(product)}
                                     style={{
-                                        backgroundColor: product.available ? 'green' : 'red',
-                                        color: 'white'
+                                        backgroundColor: product.available ? "green" : "red",
+                                        color: "white"
                                     }}
                                 >
-                                    {product.available ? 'Disponible' : 'Non disponible'}
+                                    {product.available ? "Disponible" : "Non disponible"}
                                 </Button>
                             </TableCell>
                             <TableCell>
@@ -97,25 +97,25 @@ const ProductList = () => {
                     ))}
                 </TableBody>
             </Table>
-        );
-    } else if (productStatus === 'failed') {
-        content = <div>{error}</div>;
+        )
+    } else if (productStatus === "failed") {
+        content = <div>{error}</div>
     }
 
     return (
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: "flex" }}>
             <Drawer
                 variant="permanent"
                 sx={{
                     width: 240,
                     flexShrink: 0,
-                    [`& .MuiDrawer-paper`]: { width: 240, boxSizing: 'border-box' },
+                    [`& .MuiDrawer-paper`]: { width: 240, boxSizing: "border-box" },
                 }}
             >
                 <Toolbar />
-                <Box sx={{ overflow: 'auto', flexGrow: 1 }}>
+                <Box sx={{ overflow: "auto", flexGrow: 1 }}>
                     <List>
-                        {['Dashboard', 'Inventaire'].map((text) => (
+                        {["Dashboard", "Inventaire"].map((text) => (
                             <ListItem button key={text}>
                                 <ListItemText primary={text} />
                             </ListItem>
@@ -132,7 +132,7 @@ const ProductList = () => {
                     </Button>
                 </Box>
             </Drawer>
-            <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>
+            <Box component="main" sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}>
                 <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
                     <Toolbar>
                         <Typography variant="h6" noWrap component="div">
@@ -141,13 +141,13 @@ const ProductList = () => {
                     </Toolbar>
                 </AppBar>
                 <Toolbar />
-                <div style={{ padding: '24px' }}>
-                    <Button variant="contained" startIcon={<AddIcon />} onClick={() => handleOpen(null)} style={{ marginBottom: '16px' }}>
+                <div style={{ padding: "24px" }}>
+                    <Button variant="contained" startIcon={<AddIcon />} onClick={() => handleOpen(null)} style={{ marginBottom: "16px" }}>
                         Nouvel Article
                     </Button>
                     {content}
                     <Dialog open={open} onClose={handleClose}>
-                        <DialogTitle>{selectedProduct ? 'Modifier Article' : 'Nouvel Article'}</DialogTitle>
+                        <DialogTitle>{selectedProduct ? "Modifier Article" : "Nouvel Article"}</DialogTitle>
                         <DialogContent>
                             <ProductForm product={selectedProduct} onClose={handleClose} />
                         </DialogContent>
@@ -158,7 +158,7 @@ const ProductList = () => {
                 </div>
             </Box>
         </div>
-    );
-};
+    )
+}
 
-export default ProductList;
+export default ProductList

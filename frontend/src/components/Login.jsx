@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from '../slices/userSlice';
-import { TextField, Button, Container, Typography, Box, Link } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { loginUser } from "../slices/userSlice"
+import { TextField, Button, Container, Typography, Box, Link } from "@mui/material"
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const { status } = useSelector((state) => state.user);
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const { status } = useSelector((state) => state.user)
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
         dispatch(loginUser({ username, password })).then(() => {
-            navigate('/products');
-        });
-    };
+            navigate("/products")
+        })
+    }
 
     return (
         <Container component="main" maxWidth="xs">
             <Box
                 sx={{
                     marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
                 }}
             >
                 <Typography component="h1" variant="h5">
@@ -63,7 +63,7 @@ const Login = () => {
                 </Box>
             </Box>
         </Container>
-    );
-};
+    )
+}
 
-export default Login;
+export default Login

@@ -1,11 +1,11 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Register from './components/Register';
-import Login from './components/Login';
-import ProductList from './components/ProductList';
-import { Provider } from 'react-redux';
-import { store } from './store';
-import PrivateRoute from './components/PrivateRoute';
+import React from "react"
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom"
+import Register from "./components/Register"
+import Login from "./components/Login"
+import ProductList from "./components/ProductList"
+import { Provider } from "react-redux"
+import { store } from "./store"
+import PrivateRoute from "./components/PrivateRoute"
 
 const App = () => {
     return (
@@ -25,7 +25,7 @@ const App = () => {
                 </Routes>
             </Router>
         </Provider>
-    );
-};
+    )
+}
 
-export default App;
+export default App

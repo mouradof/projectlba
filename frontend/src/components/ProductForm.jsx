@@ -1,38 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { createProduct, updateProduct } from '../slices/productSlice';
-import { TextField, Button, Box, Checkbox, FormControlLabel } from '@mui/material';
+import React, { useState, useEffect } from "react"
+import { useDispatch } from "react-redux"
+import { createProduct, updateProduct } from "../slices/productSlice"
+import { TextField, Button, Box, Checkbox, FormControlLabel } from "@mui/material"
 
 const ProductForm = ({ product, onClose }) => {
-    const [name, setName] = useState('');
-    const [type, setType] = useState('');
-    const [price, setPrice] = useState('');
-    const [rating, setRating] = useState('');
-    const [warrantyYears, setWarrantyYears] = useState('');
-    const [available, setAvailable] = useState(false);
-    const dispatch = useDispatch();
+    const [name, setName] = useState("")
+    const [type, setType] = useState("")
+    const [price, setPrice] = useState("")
+    const [rating, setRating] = useState("")
+    const [warrantyYears, setWarrantyYears] = useState("")
+    const [available, setAvailable] = useState(false)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if (product) {
-            setName(product.name);
-            setType(product.type);
-            setPrice(product.price);
-            setRating(product.rating);
-            setWarrantyYears(product.warranty_years);
-            setAvailable(product.available);
+            setName(product.name)
+            setType(product.type)
+            setPrice(product.price)
+            setRating(product.rating)
+            setWarrantyYears(product.warranty_years)
+            setAvailable(product.available)
         }
-    }, [product]);
+    }, [product])
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        const newProduct = { name, type, price, rating, warranty_years: warrantyYears, available };
+        e.preventDefault()
+        const newProduct = { name, type, price, rating, warranty_years: warrantyYears, available }
         if (product) {
-            dispatch(updateProduct({ id: product._id, product: newProduct }));
+            dispatch(updateProduct({ id: product._id, product: newProduct }))
         } else {
-            dispatch(createProduct(newProduct));
+            dispatch(createProduct(newProduct))
         }
-        onClose();
-    };
+        onClose()
+    }
 
     return (
         <Box component="form" onSubmit={handleSubmit}>
@@ -94,10 +94,10 @@ const ProductForm = ({ product, onClose }) => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
             >
-                {product ? 'Modifier Article' : 'Nouvel Article'}
+                {product ? "Modifier Article" : "Nouvel Article"}
             </Button>
         </Box>
-    );
-};
+    )
+}
 
-export default ProductForm;
+export default ProductForm
